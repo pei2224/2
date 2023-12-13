@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+     .transition-container {
+      position: relative;
+      width: 771px;
+      height: 588px;
+      overflow: hidden;
+    }
+
+    #background-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      transition: transform 1s ease-in-out;
+    }
+
+    .content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      transition: transform 1s ease-in-out;
+    }
+
+    #role {
+      width: 200px;
+      height: 190px;
+      margin: auto;
+      position: absolute;
+      top: 35%;
+      left: 10%;
+      z-index: 2;
+    }
+
+    #dialog {
+      width: 400px;
+      height: 200px;
+      margin: auto;
+      position: absolute;
+      top: 63%;
+      left: 10%;
+      z-index: 1;
+    }
+
+    #dialog p {
+      position: absolute;
+      top: 28px;
+      left: 22px;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="transition-container">
+    <img id="background-image" src="工藤宅.jpg" alt="背景图">
+    <div id="dialog" onclick="nextSentence()">
+      <img src="對話框.png" alt="對話框">
+      <p id="sentence">點擊對話框開始對話：</p>
+    </div>
+    <img id="role" src="滾筒洗衣機.png" alt="Role">
+  </div>
+  <script>
+    var sentences = [
+  "大家好，我是高中生蒸蛋滾筒洗衣機",
+  "某天和青梅竹馬兼同學的角蘭受邀參加一場晚宴",
+  "沒想到，卻發生了離奇的殺人事件!",
+  "事情要從那時說起------",
+  "這是一個下著大雨的夜晚，一台白色的豐田在蜿蜒的山路上呼嘯而過。",
+  "誒，爸爸，那邊好像有個人誒!",
+  "(一個身型高大的男人撐著一把漆黑的傘站在雨中。)",
+  "（將車緩緩停下，拉下車窗，看清楚陌生人的面貌後一震驚）",
+  "這不是貓哥嗎？你怎麼會在這裡？",
+  "（是鄰居先生？他怎麼會出現在這裡？）",
+  "啊，原來是小五狼先生啊。說來慚愧，原本是想上山來採風的，沒想到車子居然在半路拋錨了。",
+  "剛剛打電話給維修隊，但今日的天氣狀況實在是不佳，恐怕是得等到明日才能來處理。若是諸位方便的話，不知能否載我一程？",
+  "啊這…我們今天來是要前往山上的別墅參加一場晚宴的。算了！總之你先上車再說吧！",
+  "喔？邀請函？",
+  "是的，某天我放學回家後，便在桌上發現了這個。（拿出一個黑色信封）",
+  "（接過信封，拆開）",
+  " 在下仰慕閣下的睿智，特地去函邀請閣下到府晚餐小酌……最後附上了黃昏別館的地址。",
+  " 落款，怪盜基德？",
+  "沒錯，在我家的書房桌上也莫名其妙的出現了這個信封。",
+  "因為想弄清楚怪盜基德到底在搞什麼鬼，剛好聽說小五狼叔叔也接到了邀請，乾脆就一起來了。",
+  "原來是這樣啊，我了解了。",
+  "這麼說起來，前面這棟別墅就是傳說中的黃昏別館吧？",
+];
+
+    var currentIndex = -1;
+    var sentenceElement = document.getElementById('sentence');
+    var backgroundImageElement = document.getElementById('background-image');
+    var roleImageElement = document.getElementById('role');
+
+    function nextSentence() {
+      if (currentIndex < sentences.length - 1) {
+        currentIndex++;
+        sentenceElement.innerText = sentences[currentIndex];
+        // Handle role image changes based on sentences
+        if (sentences[currentIndex] == "誒，爸爸，那邊好像有個人誒!") {
+          roleImageElement.src = '角蘭.png';
+        }
+        if (sentences[currentIndex] == "(一個身型高大的男人撐著一把漆黑的傘站在雨中。)") {
+      roleImageElement.style.display = 'none';
+    } else {
+      roleImageElement.style.display = 'block';
+    }
+
+    if (sentences[currentIndex] == "（將車緩緩停下，拉下車窗，看清楚陌生人的面貌後一震驚）") {
+      roleImageElement.src = '毛利小五狼.png';
+    }
+    if (sentences[currentIndex] == "（是鄰居先生？他怎麼會出現在這裡？）") {
+      roleImageElement.src = '滾筒洗衣機.png';
+    }
+    if (sentences[currentIndex] == "啊，原來是小五狼先生啊。說來慚愧，原本是想上山來採風的，沒想到車子居然在半路拋錨了。") {
+      roleImageElement.src = '貓哥.png';
+    }
+    if (sentences[currentIndex] == "啊這…我們今天來是要前往山上的別墅參加一場晚宴的。算了！總之你先上車再說吧！") {
+      roleImageElement.src = '毛利小五狼.png';
+    }
+    if (
+      sentences[currentIndex - 1] == "事情要從那時說起------" &&
+      sentences[currentIndex] == "這是一個下著大雨的夜晚，一台白色的豐田在蜿蜒的山路上呼嘯而過。"
+    ) {
+      backgroundImageElement.style.transform = 'translateX(-100%)';
+        if (
+          sentences[currentIndex - 1] == "啊這…我們今天來是要前往山上的別墅參加一場晚宴的。算了！總之你先上車再說吧！" &&
+          sentences[currentIndex] == "喔？邀請函？"
+        ) {
+          // 轉場
+          backgroundImageElement.style.transform = 'translateX(-100%)';
+
+          setTimeout(function () {
+            backgroundImageElement.src = '毛利車.jpg';
+            backgroundImageElement.style.transform = 'translateX(0%)';
+          }, 1000);
+        }
+      } else {
+        alert("對話結束！");
+      }
+    }
+    }
+  </script>
+</body>
+
+</html>
